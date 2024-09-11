@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Situs Web dengan Animasi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+</head>
+<style>
+    /* Reset dan dasar */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e0e0;
+    background-color: #1e1e1e;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+    background: #2c2c2c;
+    color: #e0e0e0;
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+header.scrolled {
+    background-color: #1e1e1e;
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+nav ul li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: #b0bec5;
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease;
+}
+
+nav ul li a:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+nav ul li a:hover {
+    color: #b0bec5;
+    transform: translateY(-3px);
+}
+
+/* Animasi teks pada intro */
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro h1, .intro p {
+    animation: textFadeIn 1s ease-out;
+}
+
+/* Efek parallax */
+.parallax {
+    background-image: url('path-to-your-background-image.jpg');
+    height: 400px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Animasi untuk intro */
+.intro {
+    text-align: center;
+    padding: 80px 20px;
+    background: #2c2c2c;
+    color: #e0e0e0;
+    border-bottom: 2px solid #616161;
+    transition: background 0.5s ease, border-bottom 0.5s ease;
+}
+
+.intro:hover {
+    background: #1e1e1e;
+    border-bottom: 2px solid #757575;
+}
+
+/* Galeri gambar */
+.gallery {
+    padding: 20px;
+    text-align: center;
+    background: #2c2c2c;
+    border-top: 2px solid #616161;
+    border-bottom: 2px solid #616161;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 15px;
+    padding: 10px 0;
+    padding-right: 70px;
+}
+
+.image-container::-webkit-scrollbar {
+    display: none;
+}
+
+.image-container {
+    scrollbar-width: none;
+}
+
+.image-container img {
+    flex: 0 0 auto;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.image-container img:hover {
+    transform: scale(1.1) rotate(3deg);
+    filter: brightness(1.2);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Panah navigasi */
+.arrow {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(50, 50, 50, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1001;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.arrow:hover {
+    background-color: rgba(75, 75, 75, 0.9);
+    transform: scale(1.1) rotate(15deg);
+}
+
+.arrow::before {
+    content: '→';
+    color: #e0e0e0;
+    font-size: 24px;
+    transition: transform 0.3s ease;
+}
+
+.arrow:hover::before {
+    transform: translateX(5px);
+}
+
+/* Kartu */
+.cards {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: #2c2c2c;
+}
+
+.card {
+    background: #3a3a3a;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    margin: 15px;
+    padding: 20px;
+    width: 300px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, background-color 0.4s ease;
+    border: 2px solid transparent;
+}
+
+.card:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-color: #616161;
+    background-color: #4a4a4a;
+}
+
+/* Artikel tentang cinta */
+.love-article {
+    padding: 40px 20px;
+    background: #2c2c2c;
+    border-top: 2px solid #616161;
+    border-bottom: 2px solid #616161;
+    text-align: center;
+}
+
+.love-article h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.love-article p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+/* Efek fade-in untuk konten saat scroll */
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+section.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#love-article"><i class="fas fa-heart"></i> Cinta</a></li>
+                <li><a href="#gallery"><i class="fas fa-image"></i> Gallery</a></li>
+                <li><a href="#cards"><i class="fas fa-cards"></i> Cards</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section id="home" class="intro">
+        <h1>Selamat Datang di Situs Web</h1>
+        <p>Ini adalah contoh situs web dengan navbar, gambar gulir horizontal, dan card dengan animasi.</p>
+    </section>
+    <section id="love-article" class="love-article fade-in">
+        <h2>Cinta: Kekuatan yang Mengubah Dunia</h2>
+        <p>Cinta adalah salah satu kekuatan paling kuat yang ada di dunia. Ia dapat memotivasi kita untuk melakukan hal-hal besar dan membuat dunia menjadi tempat yang lebih baik. Dalam artikel ini, kita akan mengeksplorasi bagaimana cinta dapat memengaruhi hidup kita, hubungan kita, dan bahkan masyarakat kita secara keseluruhan.</p>
+    </section>
+    <section id="gallery" class="gallery">
+        <h2>Galeri Gambar</h2>
+        <div class="image-container">
+            <img src="IMG-20240903-WA0161.jpg" alt="Gambar 1">
+            <img src="IMG-20240903-WA0162.jpg" alt="Gambar 2">
+            <img src="IMG-20240903-WA0163.jpg" alt="Gambar 3">
+            <img src="IMG-20240903-WA0161.jpg" alt="Gambar 1">
+            <img src="IMG-20240903-WA0162.jpg" alt="Gambar 2">
+            <img src="IMG-20240903-WA0163.jpg" alt="Gambar 3">
+        </div>
+        <div class="arrow" id="scrollArrow"></div>
+    </section>
+    <section id="cards" class="cards blur-background">
+        <h2>Kartu</h2>
+        <div class="card">
+            <h3>Judul Kartu 1</h3>
+            <p>Ini adalah deskripsi untuk kartu pertama. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+        <div class="card">
+            <h3>Judul Kartu 2</h3>
+            <p>Ini adalah deskripsi untuk kartu kedua. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="card">
+            <h3>Judul Kartu 3</h3>
+            <p>Ini adalah deskripsi untuk kartu ketiga. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        </div>
+    </section>
+   <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scroll for navbar links
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Fade-in animation on scroll
+    const sections = document.querySelectorAll('section');
+
+    function onScroll() {
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            const viewportHeight = window.innerHeight;
+
+            if (sectionTop < viewportHeight - 150) {
+                section.classList.add('fade-in');
+            } else {
+                section.classList.remove('fade-in');
+            }
+        });
+
+        // Navbar scroll effect
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // Trigger on initial load
+
+    // Scroll gallery with arrow
+    const scrollArrow = document.getElementById('scrollArrow');
+    const imageContainer = document.querySelector('.image-container');
+
+    scrollArrow.addEventListener('click', () => {
+        imageContainer.scrollBy({
+            left: 300,
+            behavior: 'smooth'
+        });
+    });
+});
+   </script>
+</body>
+</html>
